@@ -1,13 +1,12 @@
 Application\ShopBundle\Entity\Product:
     type: entity
-    table: product
+    table: user
     id:
         id:
             type: integer
             generator:
                 strategy: IDENTITY
-        fields:
-            name:
-                type: string
-                length: 50
-
+    fields:
+        name:
+            type: string
+            length: 5
