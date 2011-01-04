@@ -1,0 +1,16 @@
+Application\ShopBundle\Entity\Category:
+  type: entity
+  table: category
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      length: 50
+  manyToMany:
+    categories:
+      targetEntity: Product
+
