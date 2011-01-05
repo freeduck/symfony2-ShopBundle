@@ -46,4 +46,28 @@ class Product
     {
         return $this->name;
     }
+    /**
+     * @var Application\ShopBundle\Entity\category
+     */
+    private $categories;
+
+    /**
+     * Add categories
+     *
+     * @param Application\ShopBundle\Entity\category $categories
+     */
+    public function addCategories(\Application\ShopBundle\Entity\category $categories)
+    {
+        $this->categories[] = $categories;
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Doctrine\Common\Collections\Collection $categories
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }

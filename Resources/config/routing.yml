@@ -1,0 +1,8 @@
+#src/Application/ShopBundle/Resources/config/routing.yml
+shop_product:
+  pattern: /product
+  defaults: { _controller: ShopBundle:Product:list }
+
+shop_product_new:
+  pattern: /product/new
+  defaults: { _controller: ShopBundle:Product:new }

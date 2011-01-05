@@ -1,12 +1,17 @@
 Application\ShopBundle\Entity\Product:
-    type: entity
-    table: user
+  type: entity
+  table: product
+  id:
     id:
-        id:
-            type: integer
-            generator:
-                strategy: IDENTITY
-    fields:
-        name:
-            type: string
-            length: 5
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      length: 50
+  manyToMany:
+    categories:
+      targetEntity: Category
+      mappedBy: products
+
