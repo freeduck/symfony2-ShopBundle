@@ -13,5 +13,5 @@ Application\ShopBundle\Entity\Product:
   manyToMany:
     categories:
       targetEntity: Category
-      mappedBy: products
+      mappedBy: Product
 

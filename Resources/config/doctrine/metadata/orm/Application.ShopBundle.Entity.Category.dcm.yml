@@ -13,4 +13,5 @@ Application\ShopBundle\Entity\Category:
   manyToMany:
     categories:
       targetEntity: Product
+      
 

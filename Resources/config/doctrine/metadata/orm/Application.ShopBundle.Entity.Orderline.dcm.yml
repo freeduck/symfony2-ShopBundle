@@ -1,0 +1,13 @@
+Application\ShopBundle\Entity\Orderline:
+  type: entity
+  table: orderline
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  oneToOne:
+    product:
+      targetEntity: Product
+      mappedBy: Orderline
+
