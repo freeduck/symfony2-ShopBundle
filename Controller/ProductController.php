@@ -19,7 +19,19 @@ class ProductController extends Controller
 
 		public function createAction(){
 			if ('POST' === $this->get('request')->getMethod()) {
-				var_dump($this->get('request')->request->get('product'));
+				$requestProduct = $this->get('request')->request->get('product');
+				$product = new Product();
+				$product->setName($requestProduct['name']);
+				$validation = $this->container->getValidatorService()->validate($product);
+				$validation = 0;
+				if(count($validation) === 0){
+					var_dump($product);
+					//return $this->redirect($this->generateUrl('blog_post'
+				}else{
+					var_dump('Hello');
+					var_dump($product);
+				}
+				
 			}
 			return $this->render('ShopBundle:Product:create.php');
 		}
