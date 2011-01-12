@@ -21,8 +21,11 @@ class ProductController extends Controller
 			if ('POST' === $this->get('request')->getMethod()) {
 				$requestProduct = $this->get('request')->request->get('product');
 				$product = new Product();
-				$product->setName($requestProduct['name']);
-				$validation = $this->container->getValidatorService()->validate($product);
+				//$product->setName($requestProduct['name']);
+				$validator = $this->container->get('validator');
+
+				var_dump($validator->validate($product));
+				/*$validation = $this->container->getValidatorService()->validate($product);
 				$validation = 0;
 				if(count($validation) === 0){
 					var_dump($product);
@@ -30,7 +33,7 @@ class ProductController extends Controller
 				}else{
 					var_dump('Hello');
 					var_dump($product);
-				}
+					}*/
 				
 			}
 			return $this->render('ShopBundle:Product:create.php');
