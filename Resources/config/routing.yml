@@ -10,3 +10,11 @@ shop_product_new:
 shop_product_create:
   pattern: /product/create
   defaults: { _controller: ShopBundle:Product:create }
+
+shop_category_new:
+  pattern: /category/new
+  defaults: { _controller: ShopBundle:Category:new }
+
+shop_admin:
+  pattern: /admin
+  defaults: {_controller: ShopBundle:Shop:index}

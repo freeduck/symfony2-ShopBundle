@@ -4,14 +4,14 @@
 
 namespace Application\ShopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Application\ShopBundle\Entity\Product;
+use Application\ShopBundle\Entity\Category;
 
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
 	public function listAction()
 	{
-		return $this->render('ShopBundle:Product:list.php');
+		return $this->render('ShopBundle:Category:list.php');
 	}
 
 
@@ -19,20 +19,20 @@ class ProductController extends Controller
 	public function newAction(){
 		$errors = array();
 		if ('POST' === $this->get('request')->getMethod()) {
-			$requestProduct = $this->get('request')->request->get('product');
-			$product = new Product();
-			$product->setName($requestProduct['name']);
+			$requestCategory = $this->get('request')->request->get('category');
+			$category = new Category();
+			$category->setName($requestCategory['name']);
 			$validator = $this->container->get('validator');
-			$violations = $validator->validate($product);
+			$violations = $validator->validate($category);
 			foreach($violations as $violation){
 				$errors[$violation->getPropertyPath()] = $violation->getMessage();
 			}
 			if(count($errors) == 0){
 				$em = $this->get('doctrine.orm.entity_manager');
-				$em->persist($product);
+				$em->persist($category);
 				$em->flush();
 			}
 		}
-		return $this->render('ShopBundle:Product:new.php', array('errors' => $errors));
+		return $this->render('ShopBundle:Category:new.php', array('errors' => $errors));
 	}
 }
