@@ -12,37 +12,32 @@ use Symfony\Component\Form\TextField;
 
 class ProductController extends Controller
 {
-    public function listAction()
-    {
-        return $this->render('ShopBundle:Product:list.php');
-    }
+	public function listAction()
+	{
+		return $this->render('ShopBundle:Product:list.php');
+	}
 
-		public function createAction(){
-			if ('POST' === $this->get('request')->getMethod()) {
-				$requestProduct = $this->get('request')->request->get('product');
-				$product = new Product();
-				//$product->setName($requestProduct['name']);
-				$validator = $this->container->get('validator');
+	public function createAction(){
+		return $this->render('ShopBundle:Product:create.php');
+	}
 
-				var_dump($validator->validate($product));
-				/*$validation = $this->container->getValidatorService()->validate($product);
-				$validation = 0;
-				if(count($validation) === 0){
-					var_dump($product);
-					//return $this->redirect($this->generateUrl('blog_post'
-				}else{
-					var_dump('Hello');
-					var_dump($product);
-					}*/
-				
-			}
-			return $this->render('ShopBundle:Product:create.php');
-		}
-
-		public function newAction(){
+	public function newAction(){
+		$errors = array();
+		if ('POST' === $this->get('request')->getMethod()) {
+			$requestProduct = $this->get('request')->request->get('product');
 			$product = new Product();
-			$form = new Form('product', $product, $this->get('validator'));
-			$form->add(new TextField('name'));
-			return $this->render('ShopBundle:Product:new.php', array('form' => $form));
+			$product->setName($requestProduct['name']);
+			$validator = $this->container->get('validator');
+			$violations = $validator->validate($product);
+			foreach($violations as $violation){
+				$errors[$violation->getPropertyPath()] = $violation->getMessage();
+			}
+			if(count($errors) == 0){
+				$em = $this->get('doctrine.orm.entity_manager');
+				$em->persist($product);
+				$em->flush();
+			}
 		}
+		return $this->render('ShopBundle:Product:new.php', array('errors' => $errors));
+	}
 }

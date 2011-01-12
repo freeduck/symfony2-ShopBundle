@@ -1,0 +1,4 @@
+Application\ShopBundle\Entity\Product:
+    properties:
+        name:
+            - NotBlank: ~
