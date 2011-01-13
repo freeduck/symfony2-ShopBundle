@@ -17,6 +17,7 @@ class CategoryController extends Controller
 
 
 	public function newAction(){
+		$this->entityManager = $this->get('doctrine.orm.entity_manager');
 		$errors = array();
 		if ('POST' === $this->get('request')->getMethod()) {
 			$requestCategory = $this->get('request')->request->get('category');
@@ -28,9 +29,8 @@ class CategoryController extends Controller
 				$errors[$violation->getPropertyPath()] = $violation->getMessage();
 			}
 			if(count($errors) == 0){
-				$em = $this->get('doctrine.orm.entity_manager');
-				$em->persist($category);
-				$em->flush();
+				$this->entityManager->persist($category);
+				$this->entityManager->flush();
 			}
 		}
 		return $this->render('ShopBundle:Category:new.php', array('errors' => $errors));

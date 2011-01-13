@@ -17,10 +17,13 @@ class ProductController extends Controller
 
 
 	public function newAction(){
+		$this->entityManager = $this->get('doctrine.orm.entity_manager');
 		$errors = array();
+		$this->modelArray = array();
+		$product = new Product();
 		if ('POST' === $this->get('request')->getMethod()) {
 			$requestProduct = $this->get('request')->request->get('product');
-			$product = new Product();
+			$this->modelArray['snapshot'] = $requestProduct;
 			$product->setName($requestProduct['name']);
 			$validator = $this->container->get('validator');
 			$violations = $validator->validate($product);
@@ -28,11 +31,16 @@ class ProductController extends Controller
 				$errors[$violation->getPropertyPath()] = $violation->getMessage();
 			}
 			if(count($errors) == 0){
-				$em = $this->get('doctrine.orm.entity_manager');
-				$em->persist($product);
-				$em->flush();
+				$this->entityManager->persist($product);
+				$this->entityManager->flush();
 			}
 		}
-		return $this->render('ShopBundle:Product:new.php', array('errors' => $errors));
+		$categoryRepository = $this->entityManager->getRepository('ShopBundle:Category');
+		$categories = $categoryRepository->findAll();
+		$this->modelArray['product'] = $product;
+		$this->modelArray['errors'] = $errors;
+		$this->modelArray['categories'] = $product;
+		$this->modelArray['validator'] = $this->get('validator');
+		return $this->render('ShopBundle:Product:new.php', $this->modelArray);
 	}
 }
