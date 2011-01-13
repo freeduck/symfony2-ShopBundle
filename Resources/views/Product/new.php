@@ -4,7 +4,7 @@ use Symfony\Component\Form\TextField;
 use Symfony\Component\Form\IntegerField;
 $form = new Form('product', $product, $validator);
 $form->add(new TextField('name'));
-if($snapshot){
+if(isset($snapshot)){
 	$form->bind($snapshot);
 }
 ?>

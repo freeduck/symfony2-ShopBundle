@@ -14,6 +14,14 @@ class ProductController extends Controller
 		return $this->render('ShopBundle:Product:list.php');
 	}
 
+	public function editListAction(){
+		$this->modelArray = array();
+		$this->entityManager = $this->get('doctrine.orm.entity_manager');
+		$productRepository = $this->entityManager->getRepository('ShopBundle:Product');
+		$this->modelArray['products'] = $productRepository->findAll();
+		return $this->render('ShopBundle:Product:editlist.php', $this->modelArray);
+	}
+
 
 
 	public function newAction(){
@@ -33,12 +41,12 @@ class ProductController extends Controller
 			if(count($errors) == 0){
 				$this->entityManager->persist($product);
 				$this->entityManager->flush();
+				return $this->redirect($this->generateUrl('shop_product_edit_list'));
 			}
 		}
 		$categoryRepository = $this->entityManager->getRepository('ShopBundle:Category');
 		$categories = $categoryRepository->findAll();
 		$this->modelArray['product'] = $product;
-		$this->modelArray['errors'] = $errors;
 		$this->modelArray['categories'] = $product;
 		$this->modelArray['validator'] = $this->get('validator');
 		return $this->render('ShopBundle:Product:new.php', $this->modelArray);
